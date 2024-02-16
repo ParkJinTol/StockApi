@@ -1,18 +1,12 @@
-package com.example.demo.jstockapi.web;
+package com.jstockapi.web;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class JstockApiController {
-  @GetMapping("/")
+  @GetMapping("/stock")
   public String Jstock() {
-    return "hello";
+    return "stock";
   }
-
-  @GetMapping("/test")
-  public String Jstock1() {
-    return "hello";
-  }
-
 }
