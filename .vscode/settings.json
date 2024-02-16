@@ -1,0 +1,6 @@
+{
+  "java.compile.nullAnalysis.mode": "automatic",
+  "code-runner.clearPreviousOutput": true,
+  "code-runner.showExecutionMessage": false,
+  "java.configuration.updateBuildConfiguration": "interactive"
+}
