@@ -1,6 +1,7 @@
 package com.jstockapi.web;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,9 +24,18 @@ public class JsUpBitApiController {
 
   @GetMapping("/upbit")
   public List<JsUpBitApiController> getJstock() {
-
-    String accessKey = "47NUwvb2m8UwUrOT07xPCnFZMQnZPEqz7vbR8NDB";
-    String secretKey = "NCnSgHj0jA6HzGMa4sbGY8RruZMbKduvRfIS8Lrl";
+    String accessKey = "";
+    String secretKey = "";
+    try {
+    InetAddress localHost = InetAddress.getLocalHost();
+    String ipAddress = localHost.getHostAddress();
+    if(ipAddress.equals("220.118.0.218")){
+      accessKey = "8VdepIe8gU90m2mXN3vtvgjs5dpb2LYGBBWx4nAI";
+      secretKey = "WW6gtzE0etbuz97xgSaN7y3xhT3JbEarqyJX1s2B";
+    }else if(ipAddress.equals("1.231.101.197")){
+       accessKey = "47NUwvb2m8UwUrOT07xPCnFZMQnZPEqz7vbR8NDB";
+       secretKey = "NCnSgHj0jA6HzGMa4sbGY8RruZMbKduvRfIS8Lrl";
+    }
     String serverUrl = "https://api.upbit.com";
 
     Algorithm algorithm = Algorithm.HMAC256(secretKey);
@@ -36,7 +46,7 @@ public class JsUpBitApiController {
 
     String authenticationToken = "Bearer " + jwtToken;
 
-    try {
+
       HttpClient client = HttpClientBuilder.create().build();
       HttpGet request = new HttpGet(serverUrl + "/v1/accounts");
       request.setHeader("Content-Type", "application/json");
