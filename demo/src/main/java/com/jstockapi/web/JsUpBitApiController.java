@@ -12,6 +12,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.auth0.jwt.JWT;
@@ -20,9 +21,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 @RestController
+@RequestMapping("/upbit")
 public class JsUpBitApiController {
-
-  @GetMapping("/upbit")
+  @GetMapping("/account")
   public List<JsUpBitApiController> getJstock() {
     String accessKey = "";
     String secretKey = "";
