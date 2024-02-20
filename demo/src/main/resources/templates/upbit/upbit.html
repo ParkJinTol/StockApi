@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lagn="ko"
+xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <head>
+        <meta charset="UTF-8" />
+        <title>thymeleaf layout</title>
+        <meta name="viewport" content="width=device-width, maximum-scale=1.0, minimum-scale=1, user-scalable=yes,initial-scale=1.0" />
+        <!-- content script -->
+        <th:block layout:fragment="css"></th:block>
+        <!-- content script -->
+        <th:block layout:fragment="script"></th:block>
+        <title>
+            UPBIT
+        </title>
+      </head>
+<body>
+    <!-- header fragment 사용 -->
+    <th:block th:replace="fragments/header :: headerFragment"></th:block>
+    <button type="button" onclick="location.href='http://localhost/'">HOME</button>
+    <table>
+        <tr>
+            <th>화폐</th>
+            <th>주문가능 금액</th>
+            <th>LOCK</th>
+            <th>매수평균</th>
+            <th>매수평균가 수정여부</th>
+            <th>평단가 기준 화폐</th>
+        </tr>
+        <tr>
+            <td th:text="${currencyValue}"></td>
+            <td th:text="${balanceValue}"></td>
+            <td th:text="${lockedValue}"></td>
+            <td th:text="${avg_buy_priceValue}"></td>
+            <td th:text="${avg_buy_price_modifiedValue}"></td>
+            <td th:text="${unit_currencyValue}"></td>
+        </tr >
+
+    </table>
+
+    <!-- footer fragment 사용 -->
+    <th:block th:replace="fragments/footer :: footerFragment"></th:block>
+</body>
+</html>
