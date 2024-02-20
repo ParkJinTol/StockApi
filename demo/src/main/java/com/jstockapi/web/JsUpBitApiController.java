@@ -10,6 +10,8 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,31 +25,40 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping("/upbit")
+@ConfigurationProperties(prefix = "ips")
 public class JsUpBitApiController {
-
+  @Value("${ips.ip1.accessKey}")
+  private String accessKeyIp1;
+  @Value("${ips.ip1.secretKey}")
+  private String secretKeyIp1;
+  @Value("${ips.ip2.accessKey}")
+  private String accessKeyIp2;
+  @Value("${ips.ip2.secretKey}")
+  private String secretKeyIp2;
   @GetMapping("/account")
   public ModelAndView getJstock(Model model) {
-    String accessKey = "";
-    String secretKey = "";
     JsonNode rootData = null;
+    String jwtToken = "";
     ModelAndView mv = new ModelAndView("upbit/upbit");
     try {
     InetAddress localHost = InetAddress.getLocalHost();
     String ipAddress = localHost.getHostAddress();
     if(ipAddress.equals("220.118.0.218")){
-      accessKey = "8VdepIe8gU90m2mXN3vtvgjs5dpb2LYGBBWx4nAI";
-      secretKey = "WW6gtzE0etbuz97xgSaN7y3xhT3JbEarqyJX1s2B";
+      Algorithm algorithm = Algorithm.HMAC256(secretKeyIp1);
+       jwtToken = JWT.create()
+          .withClaim("access_key", accessKeyIp1)
+          .withClaim("nonce", UUID.randomUUID().toString())
+          .sign(algorithm);
     }else if(ipAddress.equals("1.231.101.197")){
-       accessKey = "47NUwvb2m8UwUrOT07xPCnFZMQnZPEqz7vbR8NDB";
-       secretKey = "NCnSgHj0jA6HzGMa4sbGY8RruZMbKduvRfIS8Lrl";
+      Algorithm algorithm = Algorithm.HMAC256(secretKeyIp2);
+       jwtToken = JWT.create()
+          .withClaim("access_key", accessKeyIp2)
+          .withClaim("nonce", UUID.randomUUID().toString())
+          .sign(algorithm);
     }
     String serverUrl = "https://api.upbit.com";
 
-    Algorithm algorithm = Algorithm.HMAC256(secretKey);
-    String jwtToken = JWT.create()
-        .withClaim("access_key", accessKey)
-        .withClaim("nonce", UUID.randomUUID().toString())
-        .sign(algorithm);
+
 
     String authenticationToken = "Bearer " + jwtToken;
 
